@@ -1,0 +1,29 @@
+#define IDD_LATINVOCAB 1000
+#define IDC_TEST 1002
+#define IDC_A1 1003
+#define IDC_A2 1004
+#define IDC_A3 1005
+#define IDC_A4 1006
+#define IDC_QUESTION 1007
+#define IDC_TIME 1008
+#define IDC_RIGHT 1001
+#define IDC_WRONG 1009
+#define IDC_INDEX 1010
+#define SIMMON 666
+IDD_LATINVOCAB DIALOGEX 6,5,204,167
+CAPTION "LatinVocab - BETA"
+FONT 8,"MS Sans Serif",0,0
+STYLE 0x10CA0000
+BEGIN
+  CONTROL "Test!",IDC_TEST,"Button",0x50010000,78,3,48,13
+  CONTROL "No way.... I LOVE Latin!",IDC_A1,"Button",0x50010000,18,70,166,13
+  CONTROL "It fills my laguage cred",IDC_A2,"Button",0x50010000,18,92,166,13
+  CONTROL "Latin? I'm too busy talking to Mr. Simmons",IDC_A3,"Button",0x50010000,18,114,166,13
+  CONTROL "German is way better you insestive clod!",IDC_A4,"Button",0x50010000,18,136,166,13
+  CONTROL "Do you like Latin?",IDC_QUESTION,"Static",0x50000201,18,35,164,11
+  CONTROL "0.0",IDC_TIME,"Static",0x50000000,158,20,24,9
+  CONTROL " Right: 0",IDC_RIGHT,"Static",0x50000202,2,48,36,9
+  CONTROL "Wrong: 0",IDC_WRONG,"Static",0x50000202,2,57,36,9
+  CONTROL "1 / 999,999,999",IDC_INDEX,"Static",0x50000201,66,20,68,9
+END
+SIMMON ICON DISCARDABLE "simm.ico"

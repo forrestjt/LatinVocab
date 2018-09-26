@@ -1,0 +1,107 @@
+;LatinVocab
+;Copyright (c) 2008 Forrest Tait
+format pe gui 4.0
+entry start
+
+IDD_LATINVOCAB = 1000
+IDC_STUDY      = 1001
+IDC_TEST       = 1002
+IDC_A1	       = 1003
+IDC_A2	       = 1004
+IDC_A3	       = 1005
+IDC_A4	       = 1006
+IDC_QUESTION   = 1007
+IDC_INFO       = 1008
+
+include 'win32ax.inc'
+
+struct VWORD
+  latinstr   dd ?
+  englishstr dd ?
+ends
+
+macro qalloc size
+{
+  push ebp
+  invoke GetProcessHeap
+  invoke HeapAlloc,eax,HEAP_ZERO_MEMORY\
+                   or HEAP_GENERATE_EXCEPTIONS,size
+  pop ebp
+}
+macro qfree ptr
+{
+  push ebp
+  invoke GetProcessHeap
+  invoke HeapFree,eax,0,ptr
+  pop ebp
+}        
+
+macro HideWindow hwnd
+{
+  invoke GetWindowLong,hwnd,GWL_STYLE
+  mov ebx,WS_VISABLE
+  not ebx
+  and eax,ebx
+  invoke SetWindowLong,hwnd,GWL_STYLE,eax
+
+
+
+section '.data' data readable writable
+numWords dd 0
+
+section '.code' code readable executable
+
+start:
+  invoke  GetModuleHandle,0
+  invoke  DialogBoxParam,eax,IDD_LATINVOCAB,HWND_DESKTOP,DialogProc,0
+  invoke  ExitProcess,eax
+
+proc DialogProc,hdlg,umsg,wparam,lparam
+  push ebx esi edi
+  xor eax,eax
+
+  cmp [umsg],WM_INITDIALOG
+  je init
+  cmp [umsg],WM_COMMAND
+  je command
+  cmp [umsg],WM_CLOSE
+  je close
+
+  jmp ender
+
+  close:
+    invoke EndDialog,[hdlg],0
+    mov eax,1
+    jmp ender
+
+  init:
+
+    jmp processed
+
+
+  command:
+
+    jmp processed
+
+  processed:
+    mov eax,1
+
+  ender:
+  pop edi esi ebx
+  ret
+endp
+section '.idata' import data readable writable
+library kernel,'KERNEL32.DLL',\
+	  user,'USER32.DLL'
+
+import kernel,\
+	 GetModuleHandle,'GetModuleHandleA',\
+	 LoadLibrary,'LoadLibraryA',\
+	 ExitProcess,'ExitProcess'
+
+import user,\
+	 MessageBox,'MessageBoxA',\
+	 DialogBoxParam,'DialogBoxParamA',\
+	 EndDialog,'EndDialog'
+
+section '.rcrs' readable resource from 'latinvocabres.rc.res'

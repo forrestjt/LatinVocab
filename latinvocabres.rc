@@ -1,0 +1,27 @@
+#define IDD_LATINVOCAB 1000
+#define IDC_STUDY 1001
+#define IDC_TEST 1002
+#define IDC_A1 1003
+#define IDC_A2 1004
+#define IDC_A3 1005
+#define IDC_A4 1006
+#define IDC_QUESTION 1007
+#define IDC_INFO 1008
+#define IDC_PREV 1009
+#define IDC_NEXT 1010
+IDD_LATINVOCAB DIALOGEX 6,5,201,159
+CAPTION "LatinVocab"
+FONT 8,"MS Sans Serif",0,0
+STYLE 0x10CF0000
+BEGIN
+  CONTROL "Study!",IDC_STUDY,"Button",0x50010000,5,5,47,13
+  CONTROL "Test!",IDC_TEST,"Button",0x50010000,61,5,47,13
+  CONTROL "To Love, like, favor",IDC_A1,"Button",0x50010000,18,62,166,13
+  CONTROL "To Wander, move about",IDC_A2,"Button",0x50010000,18,84,166,13
+  CONTROL "To jump, to be annoying and also to govern",IDC_A3,"Button",0x50010000,18,108,166,13
+  CONTROL "To ponder and think",IDC_A4,"Button",0x50010000,18,132,166,13
+  CONTROL "Amo, Amare, Amavi, Amatus",IDC_QUESTION,"Static",0x50000000,56,36,94,9
+  CONTROL "3.89",IDC_INFO,"Static",0x50000000,170,36,16,9
+  CONTROL "Previous",IDC_PREV,"Button",0x50010000,10,132,54,13
+  CONTROL "Next",IDC_NEXT,"Button",0x50010000,136,132,54,13
+END

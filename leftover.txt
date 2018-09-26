@@ -1,0 +1,136 @@
+proc RandOrder,hvocab,nwords
+push ebx esi edi
+  local order:DWORD,addrlist:DWORD
+  assume eax:VWORD
+
+  mov eax,[nwords]
+  mov ebx,4
+  mul ebx
+  push eax
+  qalloc eax
+  mov [order],eax
+  pop eax
+  qalloc eax
+  mov [addrlist],eax
+
+  mov eax,[hvocab]
+  mov eax,[eax]
+  and ecx,0
+  @@:
+
+  mov ebx,[addrlist]
+  mov [ebx+ecx*4],eax
+
+  mov eax,[eax.next]
+
+  inc ecx
+  cmp ecx,[hnwords]
+  jl @b
+
+
+  stdcall RandomNumberOrder,[hnwords],[hnwords],[order]
+
+
+  mov eax,[order]
+  mov eax,[eax]
+  mov ebx,[addrlist]
+  mov ecx,[ebx+eax]
+
+  mov eax,[hvocab]
+  mov [eax],ecx
+
+
+
+  and ecx,0
+  ;dec [hnwords]
+  .RO_mainloop:
+  push ecx
+
+   mov eax,[order]
+   mov edx,[eax+ecx*4]
+   mov ebx,[addrlist]
+
+
+
+
+   mov esi,[hnwords]
+   dec esi
+   cmp ecx,esi
+   jne @f
+
+     mov eax,[ebx+edx*4]
+     mov [eax.next],0
+
+     pusha
+     cinvoke sprintf,str3,printstr,[eax.latinstr]
+     invoke MessageBox,0,str3,0,0
+     popa
+
+     jmp .skip_else
+
+   @@:
+
+
+     mov eax,[ebx+edx*4]
+     mov edx,[order]
+     mov ebx,[addrlist]
+     mov edi,[4+edx+ecx*4]
+     mov esi,[ebx+edi*4]
+     mov [eax.next],esi
+
+     pusha
+     ;mov eax,[ebx+edx*4]
+     cinvoke sprintf,str3,printstr,[eax.latinstr]
+     ;invoke MessageBox,0,str3,0,0
+     popa
+
+
+  .skip_else:
+
+  pop ecx
+  inc ecx
+  cmp ecx,[hnwords]
+  jl .RO_mainloop
+
+pop edi esi ebx
+ret
+endp
+
+proc RandomNumberOrder,n,range,addr
+push esi edi ebx
+
+  and ecx,0
+  mov edx,[addr]
+  .RNO_Order1:
+  push ecx
+    mov dword [edx+ecx*4],0
+  pop ecx
+  inc ecx
+  cmp ecx,[n]
+  jl .RNO_Order1
+
+  and ecx,0
+  .RNO_Order2:
+  push ecx
+
+    mov ebx,[addr]
+    @@:
+     push ebx
+     cinvoke rand
+     and edx,0
+     div [n]
+     pop ebx
+    cmp dword [ebx+edx*4],0
+    jne @b
+
+  pop ecx
+  mov [ebx+edx*4],ecx
+  inc ecx
+  mov eax,[n]
+  ;dec eax
+  cmp ecx,eax
+  jl .RNO_Order2
+
+pop ebx edi esi
+ret
+endp
